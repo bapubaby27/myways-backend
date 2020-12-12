@@ -32,6 +32,30 @@ otpVerification = (req, res) => {
   });
 };
 
+setPassword = (req, res) => {
+  console.log(req.body);
+  bcrypt.hash(req.body.password, saltRounds).then(async function (hash) {
+    console.log(hash);
+    let user = await User.findOne({ email: req.body.email });
+    user.password = hash;
+    user
+      .save()
+      .then((result) => {
+        res.status(200).json({
+          status: true,
+          message: "Successfully Changed Password",
+          data: result,
+        });
+      })
+      .catch((err) => {
+        res.status(200).json({
+          status: false,
+          message: err.message,
+        });
+      });
+  });
+};
+
 signUp = (req, res) => {
   console.log(req.body);
   bcrypt.hash(req.body.password, saltRounds).then(function (hash) {
@@ -47,7 +71,7 @@ signUp = (req, res) => {
         });
       })
       .catch((err) => {
-        res.status(500).json({
+        res.status(200).json({
           status: false,
           message: err.message,
         });
@@ -94,4 +118,5 @@ module.exports = {
   signIn,
   signUp,
   otpVerification,
+  setPassword,
 };

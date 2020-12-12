@@ -8,4 +8,6 @@ router.post("/signUp", controller.signUp);
 
 router.post("/sendOtp", controller.otpVerification);
 
+router.post("/updatePassword", controller.setPassword);
+
 module.exports = router;
