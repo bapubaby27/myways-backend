@@ -13,4 +13,4 @@ app.use(cors());
 
 app.use("/Auth", User);
 
-app.listen(port, () => console.log("Server has Started"));
+app.listen(port, process.env.IP, () => console.log("Server has Started"));
